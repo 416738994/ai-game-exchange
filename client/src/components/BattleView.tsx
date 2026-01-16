@@ -152,7 +152,7 @@ export default function BattleView({ instanceId }: BattleViewProps) {
       </div>
 
       {/* Battle Arena */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6 items-start">
         {/* Player Status */}
         <Card className="p-6 bg-white border-2 border-blue-200">
           <div className="flex items-center justify-between mb-4">
@@ -178,9 +178,9 @@ export default function BattleView({ instanceId }: BattleViewProps) {
                 {player.hp.toFixed(1)}%
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-4">
+            <div className="w-full bg-gray-200 rounded-full h-6">
               <div
-                className={`h-4 rounded-full transition-all ${
+                className={`h-6 rounded-full transition-all ${
                   player.hp > 50 ? "bg-green-500" :
                   player.hp > 30 ? "bg-orange-500" :
                   "bg-red-500"
@@ -207,6 +207,29 @@ export default function BattleView({ instanceId }: BattleViewProps) {
               </span>
             </div>
           </div>
+
+          {/* Equipment Section */}
+          <div className="mt-4 pt-4 border-t border-blue-200">
+            <p className="text-xs font-semibold text-gray-600 mb-3">⚔️ 装备栏</p>
+            <div className="grid grid-cols-5 gap-2">
+              {[1, 2, 3, 5, 10].map((leverage) => (
+                <button
+                  key={leverage}
+                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    player.weapon === `${leverage}x 杠杆剑`
+                      ? "bg-blue-600 text-white shadow-lg scale-105"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                  onClick={() => {
+                    // TODO: 实现杠杆切换逻辑
+                    console.log(`切换到 ${leverage}x 杠杆`);
+                  }}
+                >
+                  {leverage}x
+                </button>
+              ))}
+            </div>
+          </div>
         </Card>
 
         {/* Boss Status */}
@@ -227,9 +250,9 @@ export default function BattleView({ instanceId }: BattleViewProps) {
               </div>
               <span className="font-bold text-gray-900">{boss.hp.toFixed(1)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-4">
+            <div className="w-full bg-gray-200 rounded-full h-6">
               <div
-                className="h-4 rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all"
+                className="h-6 rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all"
                 style={{ width: `${boss.hp}%` }}
               />
             </div>

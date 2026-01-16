@@ -1,8 +1,18 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Activity, AlertCircle, Plus } from "lucide-react";
+import CreateInstanceDialog, { InstanceData } from "@/components/CreateInstanceDialog";
+import { toast } from "sonner";
 
 export default function OverviewPage() {
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
+  const handleCreateInstance = (data: InstanceData) => {
+    // TODO: 实现创建副本逻辑
+    console.log("创建副本:", data);
+    toast.success(`成功开启 ${data.asset} ${data.leverage}x 副本，投入 $${data.amount}`);
+  };
   // 模拟数据
   const stats = {
     totalAssets: 20000,
@@ -173,7 +183,7 @@ export default function OverviewPage() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">所有副本</h2>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => setCreateDialogOpen(true)}>
             <Plus className="w-4 h-4" />
             开启新副本
           </Button>
@@ -252,6 +262,13 @@ export default function OverviewPage() {
           ))}
         </div>
       </Card>
+
+      {/* 开启新副本对话框 */}
+      <CreateInstanceDialog
+        open={createDialogOpen}
+        onOpenChange={setCreateDialogOpen}
+        onCreateInstance={handleCreateInstance}
+      />
     </div>
   );
 }

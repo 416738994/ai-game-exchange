@@ -2,10 +2,19 @@ import { useState } from "react";
 import ManusSidebar from "@/components/ManusSidebar";
 import OverviewPage from "@/pages/OverviewPage";
 import InstanceDetailPage from "@/pages/InstanceDetailPage";
+import WalletConnectDialog, { WalletInfo } from "@/components/WalletConnectDialog";
+import { toast } from "sonner";
 
 export default function MainApp() {
   const [currentView, setCurrentView] = useState("overview");
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [walletDialogOpen, setWalletDialogOpen] = useState(false);
+  const [connectedWallet, setConnectedWallet] = useState<WalletInfo | null>(null);
+
+  const handleWalletConnect = (wallet: WalletInfo) => {
+    setConnectedWallet(wallet);
+    toast.success(`已连接到 ${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`);
+  };
 
   // 点击副本时自动收缩侧边栏
   const handleViewChange = (view: string) => {
@@ -41,6 +50,12 @@ export default function MainApp() {
         onViewChange={handleViewChange}
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
+        onWalletConnect={() => setWalletDialogOpen(true)}
+      />
+      <WalletConnectDialog
+        open={walletDialogOpen}
+        onOpenChange={setWalletDialogOpen}
+        onConnect={handleWalletConnect}
       />
       <div className="flex-1 overflow-hidden">
         {renderContent()}

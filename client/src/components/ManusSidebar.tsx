@@ -7,7 +7,8 @@ import {
   ChevronRight,
   TrendingUp,
   Bitcoin,
-  Zap
+  Zap,
+  Wallet
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -26,9 +27,10 @@ interface ManusSidebarProps {
   onViewChange: (view: string) => void;
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
+  onWalletConnect: () => void;
 }
 
-export default function ManusSidebar({ currentView, onViewChange, isCollapsed, setIsCollapsed }: ManusSidebarProps) {
+export default function ManusSidebar({ currentView, onViewChange, isCollapsed, setIsCollapsed, onWalletConnect }: ManusSidebarProps) {
   
   // 模拟副本数据
   const instances: Instance[] = [
@@ -165,7 +167,18 @@ export default function ManusSidebar({ currentView, onViewChange, isCollapsed, s
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-200 space-y-3">
+        {/* 钱包连接按钮 */}
+        <Button
+          variant="outline"
+          className="w-full gap-2"
+          onClick={onWalletConnect}
+        >
+          <Wallet className="w-4 h-4" />
+          {!isCollapsed && <span>连接钱包</span>}
+        </Button>
+        
+        {/* 资产信息 */}
         {!isCollapsed ? (
           <div className="text-xs text-gray-500 space-y-1">
             <div className="flex justify-between">
