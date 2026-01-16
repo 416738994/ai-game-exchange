@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import ManusSidebar from "@/components/ManusSidebar";
 import OverviewPage from "@/pages/OverviewPage";
-import InstanceDetailPage from "@/pages/InstanceDetailPage";
 import WalletConnectDialog, { WalletInfo } from "@/components/WalletConnectDialog";
 import { toast } from "sonner";
 
@@ -16,12 +16,17 @@ export default function MainApp() {
     toast.success(`已连接到 ${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`);
   };
 
-  // 点击副本时自动收缩侧边栏
+  const [, setLocation] = useLocation();
+
+  // 处理导航切换
   const handleViewChange = (view: string) => {
-    setCurrentView(view);
-    // 如果不是总览页，自动收缩侧边栏
-    if (view !== "overview" && view !== "new-instance") {
-      setIsCollapsed(true);
+    if (view === "overview") {
+      setCurrentView("overview");
+    } else if (view === "new-instance") {
+      setCurrentView("new-instance");
+    } else {
+      // 副本详情页通过路由跳转
+      setLocation(`/instance/${view}`);
     }
   };
 
@@ -37,10 +42,8 @@ export default function MainApp() {
           </div>
         </div>
       );
-    } else {
-      // 副本详情页
-      return <InstanceDetailPage />;
     }
+    return <OverviewPage />;
   };
 
   return (
