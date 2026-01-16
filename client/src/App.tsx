@@ -8,6 +8,7 @@ import AppLayout from "./components/AppLayout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import GameDashboard from "./pages/GameDashboard";
+import GameDashboardV2 from "./pages/GameDashboardV2";
 import AIChat from "./pages/AIChat";
 import Trade from "./pages/Trade";
 import Liquidity from "./pages/Liquidity";
@@ -18,7 +19,8 @@ function Router() {
   return (
     <Switch>
       {/* Public routes */}
-      <Route path="/" component={GameDashboard} />
+      <Route path="/" component={GameDashboardV2} />
+      <Route path="/v1" component={GameDashboard} />
       <Route path="/home" component={Home} />
       
       {/* Protected routes with layout */}
