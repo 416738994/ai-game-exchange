@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import GameDashboard from "./pages/GameDashboard";
 import GameDashboardV2 from "./pages/GameDashboardV2";
 import MainApp from "./pages/MainApp";
+import InstanceDetailPage from "./pages/InstanceDetailPage";
 import AIChat from "./pages/AIChat";
 import Trade from "./pages/Trade";
 import Liquidity from "./pages/Liquidity";
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/" component={MainApp} />
       <Route path="/v1" component={GameDashboard} />
       <Route path="/home" component={Home} />
+      <Route path="/instance/:id" component={InstanceDetailPage} />
       
       {/* Protected routes with layout */}
       <Route path="/dashboard">

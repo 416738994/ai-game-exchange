@@ -5,6 +5,16 @@ import InstanceDetailPage from "@/pages/InstanceDetailPage";
 
 export default function MainApp() {
   const [currentView, setCurrentView] = useState("overview");
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // 点击副本时自动收缩侧边栏
+  const handleViewChange = (view: string) => {
+    setCurrentView(view);
+    // 如果不是总览页，自动收缩侧边栏
+    if (view !== "overview" && view !== "new-instance") {
+      setIsCollapsed(true);
+    }
+  };
 
   const renderContent = () => {
     if (currentView === "overview") {
@@ -20,13 +30,18 @@ export default function MainApp() {
       );
     } else {
       // 副本详情页
-      return <InstanceDetailPage instanceId={currentView} />;
+      return <InstanceDetailPage />;
     }
   };
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <ManusSidebar currentView={currentView} onViewChange={setCurrentView} />
+      <ManusSidebar 
+        currentView={currentView} 
+        onViewChange={handleViewChange}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+      />
       <div className="flex-1 overflow-hidden">
         {renderContent()}
       </div>

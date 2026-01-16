@@ -24,10 +24,11 @@ interface Instance {
 interface ManusSidebarProps {
   currentView: string;
   onViewChange: (view: string) => void;
+  isCollapsed: boolean;
+  setIsCollapsed: (collapsed: boolean) => void;
 }
 
-export default function ManusSidebar({ currentView, onViewChange }: ManusSidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function ManusSidebar({ currentView, onViewChange, isCollapsed, setIsCollapsed }: ManusSidebarProps) {
   
   // 模拟副本数据
   const instances: Instance[] = [
