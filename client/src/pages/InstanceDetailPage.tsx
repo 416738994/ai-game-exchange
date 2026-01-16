@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useParams } from "wouter";
+import { useParams, useLocation } from "wouter";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import ManusSidebar from "@/components/ManusSidebar";
 import AIRealtimeAnalysis from "@/components/AIRealtimeAnalysis";
 import AIExecutionLog from "@/components/AIExecutionLog";
 import CommanderChat from "@/components/CommanderChat";
@@ -8,6 +11,9 @@ import BattleView from "@/components/BattleView";
 export default function InstanceDetailPage() {
   const params = useParams<{ id: string }>();
   const instanceId = params.id || "eth-3x";
+  const [, setLocation] = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(true); // 副本页默认收缩侧边栏
+  
   // AI 区域高度比例（默认 30% / 50% / 20%）
   const [zone1Height, setZone1Height] = useState(30);
   const [zone2Height, setZone2Height] = useState(50);
@@ -34,9 +40,35 @@ export default function InstanceDetailPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Left: AI Panel (3 zones) */}
-      <div className="w-2/5 border-r border-gray-200 flex flex-col bg-white">
+    <div className="flex h-screen overflow-hidden">
+      {/* Sidebar */}
+      <ManusSidebar 
+        currentView={instanceId} 
+        onViewChange={(view) => {
+          if (view === "overview") {
+            setLocation("/");
+          }
+        }}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+        onWalletConnect={() => {}}
+      />
+      
+      <div className="flex flex-1 h-screen bg-gray-50">
+        {/* Left: AI Panel (3 zones) - 缩小到 30% */}
+        <div className="w-[30%] border-r border-gray-200 flex flex-col bg-white">
+          {/* Back Button */}
+          <div className="p-4 border-b border-gray-200">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => setLocation("/")}
+            >
+              <ArrowLeft className="w-4 h-4" />
+              返回主页
+            </Button>
+          </div>
         {/* Zone 1: Real-time Analysis (30%) */}
         <div style={{ height: `${zone1Height}%` }} className="border-b border-gray-200">
           <AIRealtimeAnalysis instanceId={instanceId} />
@@ -78,6 +110,7 @@ export default function InstanceDetailPage() {
       {/* Right: Battle View */}
       <div className="flex-1 overflow-y-auto">
         <BattleView instanceId={instanceId} />
+      </div>
       </div>
     </div>
   );

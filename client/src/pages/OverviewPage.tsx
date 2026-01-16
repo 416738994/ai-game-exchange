@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Activity, AlertCircle, Plus } from "lucide-react";
 import CreateInstanceDialog, { InstanceData } from "@/components/CreateInstanceDialog";
+import AIChiefAssistant from "@/components/AIChiefAssistant";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 
@@ -88,12 +89,15 @@ export default function OverviewPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+    <div className="p-8 space-y-8 bg-gray-50 min-h-screen">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">投资总览</h1>
-        <p className="text-gray-600 mt-1">查看所有副本和 AI 团队的整体状态</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">投资总览</h1>
+        <p className="text-gray-600">查看所有副本和 AI 团队的整体状态</p>
       </div>
+
+      {/* AI Chief Assistant Report */}
+      <AIChiefAssistant />
 
       {/* 资产统计 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

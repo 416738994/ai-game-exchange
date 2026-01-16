@@ -156,10 +156,10 @@ export default function BattleView({ instanceId }: BattleViewProps) {
       </div>
 
       {/* Battle Arena */}
-      <div className="grid grid-cols-2 gap-6 items-start">
+      <div className="grid grid-cols-2 gap-6">
         {/* Player Status */}
         <Card className="p-6 bg-white border-2 border-blue-200">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between h-8 mb-4">
             <h3 className="text-lg font-bold text-blue-600">👤 你</h3>
             <div className="flex items-center gap-2">
               <Sword className="w-5 h-5 text-blue-600" />
@@ -169,7 +169,7 @@ export default function BattleView({ instanceId }: BattleViewProps) {
 
           {/* HP Bar */}
           <div className="mb-4">
-            <div className="flex items-center justify-between text-sm mb-1">
+            <div className="flex items-center justify-between text-sm h-5 mb-1">
               <div className="flex items-center gap-1">
                 <Heart className="w-4 h-4 text-red-500" />
                 <span className="font-semibold text-gray-700">生命值</span>
@@ -182,9 +182,9 @@ export default function BattleView({ instanceId }: BattleViewProps) {
                 {player.hp.toFixed(1)}%
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-6 flex items-center">
+            <div className="w-full bg-gray-200 rounded-full h-6">
               <div
-                className={`h-6 rounded-full transition-all ${
+                className={`h-full rounded-full transition-all ${
                   player.hp > 50 ? "bg-green-500" :
                   player.hp > 30 ? "bg-orange-500" :
                   "bg-red-500"
@@ -238,25 +238,25 @@ export default function BattleView({ instanceId }: BattleViewProps) {
 
         {/* Boss Status */}
         <Card className={`p-6 border-2 ${getBossColor(boss.type)}`}>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between h-8 mb-4">
             <h3 className="text-lg font-bold text-gray-900">{boss.name}</h3>
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${getBossColor(boss.type)}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${getBossColor(boss.type)}`}>
               {getBossIcon(boss.type)}
             </div>
           </div>
 
           {/* HP Bar */}
           <div className="mb-4">
-            <div className="flex items-center justify-between text-sm mb-1">
+            <div className="flex items-center justify-between text-sm h-5 mb-1">
               <div className="flex items-center gap-1">
                 <Skull className="w-4 h-4 text-gray-700" />
                 <span className="font-semibold text-gray-700">Boss 血量</span>
               </div>
               <span className="font-bold text-gray-900">{boss.hp.toFixed(1)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-6 flex items-center">
+            <div className="w-full bg-gray-200 rounded-full h-6">
               <div
-                className="h-6 rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all"
+                className="h-full rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all"
                 style={{ width: `${boss.hp}%` }}
               />
             </div>

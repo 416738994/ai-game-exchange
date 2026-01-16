@@ -5,6 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import AppLayout from "./components/AppLayout";
+import GlobalBackButton from "./components/GlobalBackButton";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import GameDashboard from "./pages/GameDashboard";
@@ -76,6 +77,7 @@ function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
+          <GlobalBackButton />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
