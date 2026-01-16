@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Activity, AlertCircle, Plus } from "lucide-react";
 import CreateInstanceDialog, { InstanceData } from "@/components/CreateInstanceDialog";
 import AIChiefAssistant from "@/components/AIChiefAssistant";
+import MainAIChatWindow from "@/components/MainAIChatWindow";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 
@@ -39,7 +40,10 @@ export default function OverviewPage() {
       pnl: 107.25,
       pnlPercent: 10.73,
       health: 35.6,
-      status: "盈利中"
+      status: "盈利中",
+      difficulty: "medium" as const, // 中级：ETH 波动中等，3x 杠杆
+      volatility: 15.2, // 波动率 15.2%
+      recommendedAmount: { min: 500, max: 2000 }
     },
     {
       id: "btc-2x",
@@ -49,7 +53,10 @@ export default function OverviewPage() {
       pnl: -23.34,
       pnlPercent: -1.17,
       health: 32.5,
-      status: "轻微亏损"
+      status: "轻微亏损",
+      difficulty: "easy" as const, // 初级：BTC 稳定，2x 低杠杆
+      volatility: 8.5, // 波动率 8.5%
+      recommendedAmount: { min: 1000, max: 5000 }
     },
     {
       id: "sol-5x",
@@ -59,7 +66,10 @@ export default function OverviewPage() {
       pnl: 27.10,
       pnlPercent: 5.42,
       health: 45.2,
-      status: "盈利中"
+      status: "盈利中",
+      difficulty: "hard" as const, // 高级：SOL 波动大，5x 高杠杆
+      volatility: 28.7, // 波动率 28.7%
+      recommendedAmount: { min: 200, max: 1000 }
     }
   ];
 
@@ -206,7 +216,23 @@ export default function OverviewPage() {
               onClick={() => handleInstanceClick(instance.id)}
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">{instance.name}</h3>
+                <div>
+                  <h3 className="font-semibold text-gray-900">{instance.name}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                      instance.difficulty === "easy" ? "bg-blue-100 text-blue-700" :
+                      instance.difficulty === "medium" ? "bg-yellow-100 text-yellow-700" :
+                      "bg-red-100 text-red-700"
+                    }`}>
+                      {instance.difficulty === "easy" ? "⭐ 初级" :
+                       instance.difficulty === "medium" ? "⭐⭐ 中级" :
+                       "⭐⭐⭐ 高级"}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      波动率 {instance.volatility}%
+                    </span>
+                  </div>
+                </div>
                 <span className={`text-xs px-2 py-1 rounded-full ${
                   instance.pnl >= 0
                     ? "bg-green-100 text-green-700"
@@ -283,6 +309,9 @@ export default function OverviewPage() {
         onOpenChange={setCreateDialogOpen}
         onCreateInstance={handleCreateInstance}
       />
+      
+      {/* AI 对话窗口 */}
+      <MainAIChatWindow />
     </div>
   );
 }

@@ -14,30 +14,13 @@ export default function InstanceDetailPage() {
   const [, setLocation] = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(true); // 副本页默认收缩侧边栏
   
-  // AI 区域高度比例（默认 30% / 50% / 20%）
-  const [zone1Height, setZone1Height] = useState(30);
-  const [zone2Height, setZone2Height] = useState(50);
-  const [zone3Height, setZone3Height] = useState(20);
-
-  // 拖拽调整高度（简化版本，后续可以优化）
-  const handleDragDivider = (dividerIndex: number, deltaY: number) => {
-    const totalHeight = window.innerHeight;
-    const deltaPercent = (deltaY / totalHeight) * 100;
-
-    if (dividerIndex === 1) {
-      // 调整 zone1 和 zone2
-      const newZone1 = Math.max(15, Math.min(50, zone1Height + deltaPercent));
-      const newZone2 = Math.max(30, Math.min(70, zone2Height - deltaPercent));
-      setZone1Height(newZone1);
-      setZone2Height(newZone2);
-    } else if (dividerIndex === 2) {
-      // 调整 zone2 和 zone3
-      const newZone2 = Math.max(30, Math.min(70, zone2Height + deltaPercent));
-      const newZone3 = Math.max(15, Math.min(40, zone3Height - deltaPercent));
-      setZone2Height(newZone2);
-      setZone3Height(newZone3);
-    }
-  };
+  // TODO: 从钱包连接状态读取用户名，这里暂时使用模拟数据
+  const walletName = undefined; // 未连接钱包，显示为"游客"
+  
+  // AI 区域高度比例（固定 30% / 50% / 20%）
+  const zone1Height = 30;
+  const zone2Height = 50;
+  const zone3Height = 20;
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -57,33 +40,13 @@ export default function InstanceDetailPage() {
       <div className="flex flex-1 h-screen bg-gray-50">
         {/* Left: AI Panel (3 zones) - 缩小到 30% */}
         <div className="w-[30%] border-r border-gray-200 flex flex-col bg-white">
-          {/* Back Button */}
-          <div className="p-4 border-b border-gray-200">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="gap-2"
-              onClick={() => setLocation("/")}
-            >
-              <ArrowLeft className="w-4 h-4" />
-              返回主页
-            </Button>
-          </div>
         {/* Zone 1: Real-time Analysis (30%) */}
         <div style={{ height: `${zone1Height}%` }} className="border-b border-gray-200">
           <AIRealtimeAnalysis instanceId={instanceId} />
         </div>
 
         {/* Divider 1 */}
-        <div
-          className="h-1 bg-gray-300 hover:bg-blue-500 cursor-row-resize transition-colors"
-          draggable
-          onDrag={(e) => {
-            if (e.clientY > 0) {
-              handleDragDivider(1, e.movementY);
-            }
-          }}
-        />
+        <div className="h-px bg-gray-200" />
 
         {/* Zone 2: Execution Log (50%) */}
         <div style={{ height: `${zone2Height}%` }} className="overflow-hidden">
@@ -91,15 +54,7 @@ export default function InstanceDetailPage() {
         </div>
 
         {/* Divider 2 */}
-        <div
-          className="h-1 bg-gray-300 hover:bg-blue-500 cursor-row-resize transition-colors"
-          draggable
-          onDrag={(e) => {
-            if (e.clientY > 0) {
-              handleDragDivider(2, e.movementY);
-            }
-          }}
-        />
+        <div className="h-px bg-gray-200" />
 
         {/* Zone 3: Commander Chat (20%) */}
         <div style={{ height: `${zone3Height}%` }} className="overflow-hidden">
@@ -108,8 +63,8 @@ export default function InstanceDetailPage() {
       </div>
 
       {/* Right: Battle View */}
-      <div className="flex-1 overflow-y-auto">
-        <BattleView instanceId={instanceId} />
+      <div className="flex-1 overflow-hidden">
+        <BattleView instanceId={instanceId} walletName={walletName} />
       </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import {
 
 interface BattleViewProps {
   instanceId: string;
+  walletName?: string; // 钱包显示名，未连接则为 undefined
 }
 
 // Boss 类型
@@ -41,7 +42,18 @@ interface PlayerStatus {
   pnlPercent: number;
 }
 
-export default function BattleView({ instanceId }: BattleViewProps) {
+export default function BattleView({ instanceId, walletName }: BattleViewProps) {
+  // 根据 instanceId 解析资产类型
+  const getAssetInfo = (id: string) => {
+    const upper = id.toUpperCase();
+    if (upper.includes('ETH')) return { asset: 'ETH', name: 'ETH 牛魔王' };
+    if (upper.includes('BTC')) return { asset: 'BTC', name: 'BTC 牛魔王' };
+    if (upper.includes('SOL')) return { asset: 'SOL', name: 'SOL 牛魔王' };
+    return { asset: 'ETH', name: 'ETH 牛魔王' };
+  };
+  
+  const assetInfo = getAssetInfo(instanceId);
+  const playerName = walletName || '游客';
   // 玩家状态
   const [player, setPlayer] = useState<PlayerStatus>({
     weapon: "3x 杠杆剑",
@@ -56,7 +68,7 @@ export default function BattleView({ instanceId }: BattleViewProps) {
   // Boss 状态
   const [boss, setBoss] = useState<BossStatus>({
     type: "bull",
-    name: "ETH 牛魔王",
+    name: assetInfo.name,
     hp: 65,
     maxHp: 100,
     armor: 3,
@@ -67,10 +79,10 @@ export default function BattleView({ instanceId }: BattleViewProps) {
 
   // 战斗实况（世界 Boss + 资金流驱动）
   const [battleLog, setBattleLog] = useState<string[]>([
-    "⚔️ 战斗开始！你使用 3x 杠杆剑挑战世界 Boss - ETH 牛魔王",
-    "💰 你投入 $1,000 弹药，加入多头阵营（当前总多头持仓 $45.2M）",
+    `⚔️ 战斗开始！${playerName}使用 3x 杠杆剑挑战世界 Boss - ${assetInfo.name}`,
+    `💰 ${playerName}投入 $1,000 弹药，加入多头阵营（当前总多头持仓 $45.2M）`,
     "📈 Boss 使用「突破阐力」（大额买单 +$12.3M 涌入，突破 $3,580 阐力位）",
-    "✨ 团队暴击！所有多头持仓价值增加 +10.73%（你的收益 +$107.25）",
+    `✨ 团队暴击！所有多头持仓价值增加 +10.73%（${playerName}的收益 +$107.25）`,
     "🛡️ Boss 护甲层数：3 层（支撑位 $3,500 / $3,400 / $3,300，总买盘支撑 $38.6M）"
   ]);
 
@@ -148,19 +160,19 @@ export default function BattleView({ instanceId }: BattleViewProps) {
   };
 
   return (
-    <div className="h-full bg-gradient-to-br from-gray-50 to-gray-100 p-6 space-y-6">
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex flex-col">
       {/* Battle Header */}
       <div className="text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">⚔️ 战斗副本</h2>
-        <p className="text-gray-600">你 vs {boss.name}</p>
+        <p className="text-gray-600">{playerName} vs {boss.name}</p>
       </div>
 
       {/* Battle Arena */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
         {/* Player Status */}
         <Card className="p-6 bg-white border-2 border-blue-200">
           <div className="flex items-center justify-between h-8 mb-4">
-            <h3 className="text-lg font-bold text-blue-600">👤 你</h3>
+            <h3 className="text-lg font-bold text-blue-600">👤 {playerName}</h3>
             <div className="flex items-center gap-2">
               <Sword className="w-5 h-5 text-blue-600" />
               <span className="text-sm font-semibold text-gray-700">{player.weapon}</span>
