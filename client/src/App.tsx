@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import AppLayout from "./components/AppLayout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import GameDashboard from "./pages/GameDashboard";
 import AIChat from "./pages/AIChat";
 import Trade from "./pages/Trade";
 import Liquidity from "./pages/Liquidity";
@@ -17,7 +18,8 @@ function Router() {
   return (
     <Switch>
       {/* Public routes */}
-      <Route path="/" component={Home} />
+      <Route path="/" component={GameDashboard} />
+      <Route path="/home" component={Home} />
       
       {/* Protected routes with layout */}
       <Route path="/dashboard">
@@ -66,7 +68,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
           <Router />

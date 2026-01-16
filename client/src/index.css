@@ -43,39 +43,75 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
+  /* 白色主题 - 游戏化配色 */
+  --radius: 0.75rem;
+  
+  /* 背景 - 纯白 */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
+  --foreground: oklch(0.2 0.01 270);
+  
+  /* 卡片 - 浅灰 */
+  --card: oklch(0.97 0.005 270);
+  --card-foreground: oklch(0.2 0.01 270);
+  
+  /* Popover */
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --popover-foreground: oklch(0.2 0.01 270);
+  
+  /* Primary - 蓝色（中性操作）*/
+  --primary: oklch(0.55 0.18 240);
+  --primary-foreground: oklch(0.98 0.01 240);
+  
+  /* Secondary - 浅灰 */
+  --secondary: oklch(0.96 0.005 270);
+  --secondary-foreground: oklch(0.2 0.01 270);
+  
+  /* Muted */
+  --muted: oklch(0.96 0.005 270);
+  --muted-foreground: oklch(0.5 0.01 270);
+  
+  /* Accent - 绿色（盈利）*/
+  --accent: oklch(0.55 0.15 150);
+  --accent-foreground: oklch(0.98 0.01 150);
+  
+  /* Destructive - 红色（亏损/风险）*/
+  --destructive: oklch(0.60 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
+  
+  /* Border */
+  --border: oklch(0.90 0.005 270);
+  --input: oklch(0.90 0.005 270);
+  --ring: oklch(0.55 0.18 240);
+  
+  /* 游戏化颜色 */
+  --profit: oklch(0.55 0.15 150); /* 绿色 - 盈利 */
+  --profit-foreground: oklch(0.98 0.01 150);
+  --profit-light: oklch(0.95 0.05 150);
+  
+  --loss: oklch(0.60 0.22 25); /* 红色 - 亏损 */
+  --loss-foreground: oklch(0.98 0.01 25);
+  --loss-light: oklch(0.95 0.08 25);
+  
+  --warning: oklch(0.70 0.18 80); /* 琥珀色 - 警告 */
+  --warning-foreground: oklch(0.98 0.01 80);
+  --warning-light: oklch(0.95 0.08 80);
+  
+  /* Chart colors */
+  --chart-1: oklch(0.55 0.18 240); /* 蓝 */
+  --chart-2: oklch(0.55 0.15 150); /* 绿 */
+  --chart-3: oklch(0.60 0.22 25);  /* 红 */
+  --chart-4: oklch(0.70 0.18 80);  /* 琥珀 */
+  --chart-5: oklch(0.55 0.18 280); /* 紫 */
+  
+  /* Sidebar */
+  --sidebar: oklch(0.98 0.005 270);
+  --sidebar-foreground: oklch(0.2 0.01 270);
+  --sidebar-primary: oklch(0.55 0.18 240);
+  --sidebar-primary-foreground: oklch(0.98 0.01 240);
+  --sidebar-accent: oklch(0.96 0.005 270);
+  --sidebar-accent-foreground: oklch(0.2 0.01 270);
+  --sidebar-border: oklch(0.90 0.005 270);
+  --sidebar-ring: oklch(0.55 0.18 240);
 }
 
 .dark {
@@ -195,4 +231,222 @@
       max-width: 1280px; /* Standard content width */
     }
   }
+}
+/* 游戏化动画效果 */
+@keyframes profit-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(34, 197, 94, 0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.6),
+                0 0 60px rgba(34, 197, 94, 0.4),
+                inset 0 0 15px rgba(34, 197, 94, 0.2);
+  }
+}
+
+@keyframes loss-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6),
+                0 0 60px rgba(239, 68, 68, 0.4),
+                inset 0 0 15px rgba(239, 68, 68, 0.2);
+  }
+}
+
+@keyframes screen-flash-profit {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(34, 197, 94, 0.08);
+  }
+}
+
+@keyframes screen-flash-loss {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(239, 68, 68, 0.08);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+  20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes danger-blink {
+  0%, 100% { 
+    opacity: 1; 
+    border-color: oklch(0.60 0.22 25);
+  }
+  50% { 
+    opacity: 0.6; 
+    border-color: oklch(0.60 0.22 25 / 0.5);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 游戏化工具类 */
+.profit-glow {
+  animation: profit-glow 1s ease-in-out;
+}
+
+.loss-glow {
+  animation: loss-glow 1s ease-in-out;
+}
+
+.screen-flash-profit {
+  animation: screen-flash-profit 0.5s ease-in-out;
+}
+
+.screen-flash-loss {
+  animation: screen-flash-loss 0.5s ease-in-out;
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.danger-alert {
+  animation: danger-blink 1s ease-in-out infinite;
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 血条样式 */
+.health-bar {
+  @apply h-2 rounded-full overflow-hidden bg-secondary relative;
+}
+
+.health-bar-fill {
+  @apply h-full transition-all duration-500 ease-out;
+}
+
+.health-bar-fill.safe {
+  @apply bg-gradient-to-r from-green-500 to-green-600;
+}
+
+.health-bar-fill.warning {
+  @apply bg-gradient-to-r from-yellow-500 to-orange-500;
+}
+
+.health-bar-fill.danger {
+  @apply bg-gradient-to-r from-orange-500 to-red-600;
+}
+
+/* 渐变背景 */
+.bg-gradient-profit {
+  background: linear-gradient(135deg, 
+    oklch(0.95 0.05 150) 0%, 
+    oklch(1 0 0) 100%);
+}
+
+.bg-gradient-loss {
+  background: linear-gradient(135deg, 
+    oklch(0.95 0.08 25) 0%, 
+    oklch(1 0 0) 100%);
+}
+
+/* 游戏化布局 */
+.game-layout {
+  @apply min-h-screen flex flex-col bg-background;
+}
+
+.game-header {
+  @apply border-b border-border;
+  background-color: hsl(var(--card) / 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.game-content {
+  @apply flex-1 flex overflow-hidden;
+}
+
+.game-main {
+  @apply flex-1 overflow-auto;
+}
+
+.game-sidebar {
+  @apply w-96 border-l border-border flex flex-col overflow-hidden transition-all duration-300;
+  background-color: hsl(var(--card) / 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.game-sidebar.collapsed {
+  @apply w-0 border-0;
+}
+
+.game-footer {
+  @apply border-t border-border;
+  background-color: hsl(var(--card) / 0.5);
+  backdrop-filter: blur(8px);
+}
+
+/* 副本卡片特效 */
+.instance-card {
+  @apply bg-card border border-border rounded-xl shadow-sm p-4 relative overflow-hidden transition-all duration-300 hover:shadow-md;
+}
+
+.instance-card::before {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+.instance-card:hover::before {
+  @apply opacity-100;
+}
+
+.instance-card.profit::before {
+  background: linear-gradient(135deg, transparent 0%, rgba(34, 197, 94, 0.08) 100%);
+}
+
+.instance-card.loss::before {
+  background: linear-gradient(135deg, transparent 0%, rgba(239, 68, 68, 0.08) 100%);
+}
+
+/* 连胜标记 */
+.streak-badge {
+  @apply inline-flex items-center gap-1 px-2 py-1 rounded-full
+         text-xs font-bold animate-pulse;
+}
+
+.streak-badge.streak-3 {
+  @apply bg-orange-100 text-orange-700 border border-orange-300;
+}
+
+.streak-badge.streak-5 {
+  @apply bg-red-100 text-red-700 border border-red-300;
+}
+
+.streak-badge.streak-10 {
+  @apply bg-purple-100 text-purple-700 border border-purple-300;
 }
