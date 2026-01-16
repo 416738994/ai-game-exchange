@@ -4,14 +4,20 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Activity, AlertCircle, Plus } from "lucide-react";
 import CreateInstanceDialog, { InstanceData } from "@/components/CreateInstanceDialog";
 import { toast } from "sonner";
+import { useLocation } from "wouter";
 
 export default function OverviewPage() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [, setLocation] = useLocation();
 
   const handleCreateInstance = (data: InstanceData) => {
     // TODO: 实现创建副本逻辑
     console.log("创建副本:", data);
     toast.success(`成功开启 ${data.asset} ${data.leverage}x 副本，投入 $${data.amount}`);
+  };
+
+  const handleInstanceClick = (instanceId: string) => {
+    setLocation(`/instance/${instanceId}`);
   };
   // 模拟数据
   const stats = {
@@ -190,7 +196,11 @@ export default function OverviewPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {instances.map((instance) => (
-            <Card key={instance.id} className="p-6 bg-white border-gray-200 hover:shadow-lg transition-shadow cursor-pointer">
+            <Card 
+              key={instance.id} 
+              className="p-6 bg-white border-gray-200 hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => handleInstanceClick(instance.id)}
+            >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-900">{instance.name}</h3>
                 <span className={`text-xs px-2 py-1 rounded-full ${

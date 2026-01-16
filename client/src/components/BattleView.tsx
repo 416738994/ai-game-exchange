@@ -62,28 +62,32 @@ export default function BattleView({ instanceId }: BattleViewProps) {
     armor: 3,
     attack: 45,
     morale: "aggressive",
-    skills: ["突破阻力", "成交量爆发", "鲸鱼买入"]
+    skills: ["突破阐力 (+$12M)", "成交量爆发 (340%)", "鲸鱼买入 (5K ETH)"]
   });
 
-  // 战斗实况
+  // 战斗实况（世界 Boss + 资金流驱动）
   const [battleLog, setBattleLog] = useState<string[]>([
-    "⚔️ 战斗开始！你使用 3x 杠杆剑挑战 ETH 牛魔王",
-    "💰 你投入 $1,000 弹药，开始进攻",
-    "📈 Boss 使用技能「突破阻力」，价格上涨至 $3,580",
-    "✨ 暴击！你的持仓价值增加 +10.73%",
-    "🛡️ Boss 护甲层数：3 层（支撑位 $3,500 / $3,400 / $3,300）"
+    "⚔️ 战斗开始！你使用 3x 杠杆剑挑战世界 Boss - ETH 牛魔王",
+    "💰 你投入 $1,000 弹药，加入多头阵营（当前总多头持仓 $45.2M）",
+    "📈 Boss 使用「突破阐力」（大额买单 +$12.3M 涌入，突破 $3,580 阐力位）",
+    "✨ 团队暴击！所有多头持仓价值增加 +10.73%（你的收益 +$107.25）",
+    "🛡️ Boss 护甲层数：3 层（支撑位 $3,500 / $3,400 / $3,300，总买盘支撑 $38.6M）"
   ]);
 
-  // 模拟战斗更新
+  // 模拟战斗更新（世界 Boss + 资金流驱动）
   useEffect(() => {
     const interval = setInterval(() => {
+      // 资金流驱动的事件（每个事件都包含资金流因子解释）
       const events = [
-        "📊 Boss 使用「成交量爆发」，攻击力提升",
-        "💎 鲸鱼入场！Boss 士气高涨",
-        "⚠️ Boss 发动反击，价格回调 -2%",
-        "🎯 你的策略奏效，Boss HP 下降",
-        "🔥 连击！持仓价值持续增长",
-        "🛡️ Boss 护甲破裂，支撑位被击穿"
+        "📊 Boss 使用「成交量爆发」（15分钟成交量暴增 340%，散户 FOMO 入场）",
+        "💎 Boss 使用「鲸鱼买入」（巨鲸地址转入 5,000 ETH 至交易所，价格冲高 +3.2%）",
+        "⚠️ Boss 使用「空头砸盘」（大额卖单 -$8.5M 砸盘，价格下跌 -2.1%，全体多头受伤）",
+        "🎯 Boss 使用「突破阐力」（大额买单 +$12.3M 涌入，突破关键阐力位 $3,580）",
+        "🔥 团队生命值恢复！（新增多头持仓 +$2.8M，更多玩家加入战斗）",
+        "🛡️ Boss 护甲破裂！（支撑位 $3,500 被击穿，大额止损单 -$6.2M 触发）",
+        "💥 Boss 使用「恐慌踩踏」（散户恐慌性抛售 -$4.7M，价格短时暴跌 -5.3%）",
+        "✨ 团队暴击！（大量买入订单 +$15.6M 涌入，价格快速上涨 +4.8%）",
+        "🐋 Boss 使用「机构出货」（机构大额减仓 -$9.8M，市场流动性枯竭）"
       ];
 
       const randomEvent = events[Math.floor(Math.random() * events.length)];
@@ -165,7 +169,7 @@ export default function BattleView({ instanceId }: BattleViewProps) {
 
           {/* HP Bar */}
           <div className="mb-4">
-            <div className="flex items-center justify-between text-sm mb-2">
+            <div className="flex items-center justify-between text-sm mb-1">
               <div className="flex items-center gap-1">
                 <Heart className="w-4 h-4 text-red-500" />
                 <span className="font-semibold text-gray-700">生命值</span>
@@ -178,7 +182,7 @@ export default function BattleView({ instanceId }: BattleViewProps) {
                 {player.hp.toFixed(1)}%
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-6">
+            <div className="w-full bg-gray-200 rounded-full h-6 flex items-center">
               <div
                 className={`h-6 rounded-full transition-all ${
                   player.hp > 50 ? "bg-green-500" :
@@ -243,14 +247,14 @@ export default function BattleView({ instanceId }: BattleViewProps) {
 
           {/* HP Bar */}
           <div className="mb-4">
-            <div className="flex items-center justify-between text-sm mb-2">
+            <div className="flex items-center justify-between text-sm mb-1">
               <div className="flex items-center gap-1">
                 <Skull className="w-4 h-4 text-gray-700" />
                 <span className="font-semibold text-gray-700">Boss 血量</span>
               </div>
               <span className="font-bold text-gray-900">{boss.hp.toFixed(1)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-6">
+            <div className="w-full bg-gray-200 rounded-full h-6 flex items-center">
               <div
                 className="h-6 rounded-full bg-gradient-to-r from-red-500 to-orange-500 transition-all"
                 style={{ width: `${boss.hp}%` }}
